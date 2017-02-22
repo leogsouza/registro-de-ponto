@@ -1,0 +1,9 @@
+{
+  "name": "registro-de-ponto",
+  "version": "1.0.0",
+  "description": "App de registro de ponto",
+  "main": "index.js",
+  "repository": "https://github.com/leogsouza/registro-de-ponto.git",
+  "author": "Leonardo Souza <leogsouza@gmail.com>",
+  "license": "MIT"
+}
