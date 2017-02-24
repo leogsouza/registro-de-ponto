@@ -1,13 +1,15 @@
 import React from 'react';
 import Client from './Client';
 
+
 class EntryList extends React.Component {
 
   constructor(props) {
     super(props); // required
 
     this.state = {
-      entries: []
+      entries: [],
+      days: []
     };
   }
 
@@ -15,27 +17,47 @@ class EntryList extends React.Component {
     Client.getEntries().then((response) => {
 
       this.setState({entries: response});
-    })
+      const days = Client.allDays();
+
+      this.setState({days: days});
+    });
+  }
+
+  renderTimeEntries(entries, day) {
+    if(entries[day]) {
+      return (
+        entries[day].map((entry, index) =>
+          <td key={index}>{entry}</td>)
+      )
+
+    } else {
+      const arr = Array.from(Array(4).keys());
+      return (
+        arr.map((item, index) => <td key={index}></td>)
+      )
+    }
   }
 
   render() {
+    const entries = this.state.entries;
+    console.log('olá', this.state.days);
     return (
       <div>
         <table>
             <thead>
-                <td>Data</td>
-                <td>Ent1</td>
-                <td>Sai1</td>
-                <td>Ent2</td>
-                <td>Sai2</td>
+              <tr>
+                <th>Data</th>
+                <th>Ent1</th>
+                <th>Sai1</th>
+                <th>Ent2</th>
+                <th>Sai2</th>
+              </tr>
             </thead>
             <tbody>
-                {Object.entries(this.state.entries).map((value, index) =>
-                    <tr>
-                        <td>{value[0]}</td>
-                        {value[1].map(item =>
-                            <td>{item}</td>
-                        )}
+                {this.state.days.map((day, idxDay) =>
+                    <tr key={idxDay}>
+                        <td>{day}</td>
+                        {this.renderTimeEntries(entries, day)}
                     </tr>
                 )}
             </tbody>

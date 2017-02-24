@@ -1,4 +1,8 @@
-import moment from 'moment';
+import Moment from 'moment';
+import {extendMoment} from 'moment-range';
+
+const moment = extendMoment(Moment);
+
 
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
@@ -12,8 +16,20 @@ const checkStatus = (response) => {
 
 const parseJSON = (response) => response.json();
 
+const allDays = () => {
+  const begin = moment().format("YYYY-MM-01");
+  const end = moment().format("YYYY-MM-")+ moment().daysInMonth();
+  const range = moment.range(begin, end);
+
+  const arrDates = Array.from(range.by('day'));
+  return arrDates.map( itemDate => itemDate.format("DD/MM/YYYY"));
+
+  //const arr = moment(begin).twix(end).toArray("days");
+  //console.log(arr[0].format('LLL'));
+}
+
 const prepareEntries = (entries) => {
-  return entries.map( (entry) => {
+  const objEntries = entries.map( (entry) => {
     const date = moment(entry.time_entry).format("DD/MM/YYYY");
     const time = moment(entry.time_entry).format("HH:mm");
 
@@ -26,7 +42,16 @@ const prepareEntries = (entries) => {
 
     return acum;
   },{});
+
+  /*const arrEntries = Object.entries(objEntries).map((item) => {
+    const entry = item[1];
+    entry.unshift(item[0])
+    return entry;
+  });*/
+
+  return objEntries;
 }
+
 
 
 const getEntries = () =>
@@ -37,6 +62,6 @@ const getEntries = () =>
   .then((parseJSON))
   .then(prepareEntries);
 
-const Client = {getEntries};
+const Client = {getEntries, allDays};
 
 export default Client;
