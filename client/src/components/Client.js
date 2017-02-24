@@ -25,9 +25,7 @@ const prepareEntries = (entries) => {
     acum[key].push(item.time);
 
     return acum;
-  }, {});
-
-
+  },{});
 }
 
 

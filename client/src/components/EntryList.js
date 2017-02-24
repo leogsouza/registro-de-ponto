@@ -21,8 +21,25 @@ class EntryList extends React.Component {
   render() {
     return (
       <div>
-        {JSON.stringify(this.state.entries)/*(entry =>
-          <p>{JSON.stringify(entry)}</p>)*/}
+        <table>
+            <thead>
+                <td>Data</td>
+                <td>Ent1</td>
+                <td>Sai1</td>
+                <td>Ent2</td>
+                <td>Sai2</td>
+            </thead>
+            <tbody>
+                {Object.entries(this.state.entries).map((value, index) =>
+                    <tr>
+                        <td>{value[0]}</td>
+                        {value[1].map(item =>
+                            <td>{item}</td>
+                        )}
+                    </tr>
+                )}
+            </tbody>
+        </table>
       </div>
     );
   }
