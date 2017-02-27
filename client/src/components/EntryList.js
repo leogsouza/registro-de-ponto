@@ -1,27 +1,7 @@
 import React from 'react';
-import Client from './Client';
 import {Table, Header} from 'semantic-ui-react';
 
 class EntryList extends React.Component {
-
-  constructor(props) {
-    super(props); // required
-
-    this.state = {
-      entries: [],
-      days: []
-    };
-  }
-
-  componentDidMount() {
-    Client.getEntries().then((response) => {
-
-      this.setState({entries: response});
-      const days = Client.allDays();
-
-      this.setState({days: days});
-    });
-  }
 
   renderTimeEntries(entries, day) {
     if(entries[day]) {
@@ -39,8 +19,8 @@ class EntryList extends React.Component {
   }
 
   render() {
-    const entries = this.state.entries;
-    
+    const entries = this.props.entries;
+
     return (
       <div>
         <Table striped>
@@ -54,7 +34,7 @@ class EntryList extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.state.days.map((day, idxDay) =>
+            {this.props.days.map((day, idxDay) =>
                 <Table.Row key={idxDay}>
                     <Table.Cell>
                       <Header as="h4">{day}</Header>

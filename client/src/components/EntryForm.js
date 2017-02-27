@@ -17,13 +17,12 @@ class EntryForm extends Component {
   }
 
   handleChange = (moment) => {
-
     this.setState({moment});
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.moment.format('YYYY-MM-DD HH:mm'));
+    this.props.time_entry = this.state.moment.format('YYYY-MM-DD HH:mm');
   }
 
   render() {
