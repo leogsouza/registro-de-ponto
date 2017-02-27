@@ -1,6 +1,6 @@
 import React from 'react';
 import Client from './Client';
-
+import {Table, Header} from 'semantic-ui-react';
 
 class EntryList extends React.Component {
 
@@ -27,41 +27,43 @@ class EntryList extends React.Component {
     if(entries[day]) {
       return (
         entries[day].map((entry, index) =>
-          <td key={index}>{entry}</td>)
+          <Table.Cell key={index}>{entry}</Table.Cell>)
       )
 
     } else {
       const arr = Array.from(Array(4).keys());
       return (
-        arr.map((item, index) => <td key={index}></td>)
+        arr.map((item, index) => <Table.Cell key={index}></Table.Cell>)
       )
     }
   }
 
   render() {
     const entries = this.state.entries;
-    console.log('olá', this.state.days);
+    
     return (
       <div>
-        <table>
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Ent1</th>
-                <th>Sai1</th>
-                <th>Ent2</th>
-                <th>Sai2</th>
-              </tr>
-            </thead>
-            <tbody>
-                {this.state.days.map((day, idxDay) =>
-                    <tr key={idxDay}>
-                        <td>{day}</td>
-                        {this.renderTimeEntries(entries, day)}
-                    </tr>
-                )}
-            </tbody>
-        </table>
+        <Table striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Data</Table.HeaderCell>
+              <Table.HeaderCell>Ent1</Table.HeaderCell>
+              <Table.HeaderCell>Sai1</Table.HeaderCell>
+              <Table.HeaderCell>Ent2</Table.HeaderCell>
+              <Table.HeaderCell>Sai2</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {this.state.days.map((day, idxDay) =>
+                <Table.Row key={idxDay}>
+                    <Table.Cell>
+                      <Header as="h4">{day}</Header>
+                    </Table.Cell>
+                    {this.renderTimeEntries(entries, day)}
+                </Table.Row>
+            )}
+          </Table.Body>
+        </Table>
       </div>
     );
   }
