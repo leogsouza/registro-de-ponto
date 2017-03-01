@@ -9,6 +9,7 @@ const checkStatus = (response) => {
     return response;
   } else {
     const error = new Error(response.statusText)
+    console.log('error', response);
     error.response = response;
     throw error;
   }
@@ -62,6 +63,16 @@ const getEntries = () =>
   .then((parseJSON))
   .then(prepareEntries);
 
-const Client = {getEntries, allDays};
+const saveEntry = (entry) =>{
+  fetch('/entries', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(entry)
+  });
+  return getEntries();
+};
+const Client = {getEntries, allDays, saveEntry};
 
 export default Client;
