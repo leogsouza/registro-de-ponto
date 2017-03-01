@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {DatetimePicker} from 'rc-datetime-picker';
+import {DatetimePickerTrigger} from 'rc-datetime-picker';
 import moment from 'moment';
-import {Form, Button} from 'semantic-ui-react';
+import {Form, Button, Input} from 'semantic-ui-react';
 
 class EntryForm extends Component {
 
@@ -28,8 +28,10 @@ class EntryForm extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <DatetimePicker
-          moment={this.state.moment} weeks={this.state.weeks} onChange={this.handleChange} />
+        <DatetimePickerTrigger
+          moment={this.state.moment} weeks={this.state.weeks} onChange={this.handleChange} >
+          <Input icon="calendar" value={this.state.moment.format('DD-MM-YYYY HH:mm')} readOnly/>
+        </DatetimePickerTrigger>
         <p><Button type="submit">Salvar</Button></p>
 
       </Form>
